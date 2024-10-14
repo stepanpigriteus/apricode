@@ -32,20 +32,20 @@ function Editor() {
     };
 
     return(
-        <section className={`flex flex-col min-w-[50%] m-0 min-h-[478px] py-4 pl-2  'bg-white text-black' rounded-br-lg rounded-tr-lg shadow-md border border-gray-300`}>
+        <section className={`flex flex-col min-w-[50%] m-0 min-h-[478px] py-4 pl-2  ${treeStore.isDarkTheme ? 'bg-gray-40 text-black border border-gray-110' : 'bg-gray-700 text-gray-200 '} rounded-br-lg rounded-tr-lg shadow-md border-gray-300`}>
             {treeStore.selectedTaskId ? (
                 <>
                     <input
                         value={title}
                         onChange={handleTitleChange}
-                        className={`w-full mb-2 pl-1.5 pt-1 pb-1 max-w-[95%]   'bg-white text-black'}`}
-                        placeholder="Task title"
+                        className={`w-full mb-2 pl-1.5 pt-1 pb-1 max-w-[95%] ${treeStore.isDarkTheme ? 'bg-white text-black disabled:bg-gray-700' : 'bg-gray-700 text-gray-200 focus:outline-gray-500 '}`}
+                        placeholder="Название задачи"
                     />
                     <textarea                
                         value={description}
                         onChange={handleDescriptionChange}
-                        placeholder="Task description"
-                        className={`w-full flex-1 pl-1.5 pt-3 max-w-[95%] resize-none 'bg-white text-black'}`}
+                        placeholder="Описание задачи"
+                        className={`w-full flex-1 pl-1.5 pt-3 max-w-[95%] resize-none ${treeStore.isDarkTheme ? 'bg-white text-black' : 'bg-gray-700 text-gray-200 focus:outline-gray-500 '}`}
                     />
                 </>
             ) : (

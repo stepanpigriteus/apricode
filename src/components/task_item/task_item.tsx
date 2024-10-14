@@ -33,7 +33,7 @@ const TaskItem = observer(({ item, children }: Node<ListItem>) => {
                         checked={item.checked}
                         onChange={() => treeStore.toggleTaskCheck(item.id)}
                     />
-                    <span onClick={handleSelect}>{item.title}</span>
+                    <span className="text-base tracking-wider" onClick={handleSelect}>{item.title}</span>
                     {children.length > 0 && (
                         <button
                             type="button"
