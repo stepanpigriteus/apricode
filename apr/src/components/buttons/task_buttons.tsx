@@ -1,7 +1,7 @@
 import { useState } from "react";
 import treeStore from "../../strores/store";
 import { observer } from "mobx-react-lite";
-
+import { CheckIcon, XMarkIcon, TrashIcon } from '@heroicons/react/24/solid';
 
 function TaskButtons() {
     const [taskTitle, setTaskTitle] = useState("");
@@ -14,7 +14,7 @@ function TaskButtons() {
     };
 
     return (
-        <div>
+        <div className="flex">
             <input
                 type="text"
                 className="border border-gray-300 rounded py-1 px-2 m-1"
@@ -24,26 +24,31 @@ function TaskButtons() {
             />
             <button
                 type="button"
-                className="font-light bg-black bg-opacity-85 py-2 px-2 text-xs text-white m-1 rounded hover:bg-black hover:bg-opacity-55"
+                className="font-light bg-green-700 bg-opacity-85 py-2 px-2 text-xs text-white m-1 rounded hover:bg-black hover:bg-opacity-55"
                 onClick={handleAddTask} 
             >
                 Добавить
             </button>
             <button 
-                className="font-light bg-black bg-opacity-85 py-2 px-2 text-xs text-white m-1 rounded hover:bg-black hover:bg-opacity-55"
+                className="flex items-center justify-center font-light bg-black bg-opacity-85 py-2 px-2 text-xs text-white m-1 rounded hover:bg-black hover:bg-opacity-55"
                 onClick={treeStore.selectAll}
-                >
-                &#128505; все
-            </button>
-            <button
-                     onClick={treeStore.deselectAll}
-                 className="font-light bg-black bg-opacity-85 py-2 px-2 text-xs text-white m-1 rounded hover:bg-black hover:bg-opacity-55">
-                &#128503; все
+            >
+                <CheckIcon className="w-5 h-5 text-green-500 mr-1" /> 
+                все
             </button>
             <button 
-                onClick={treeStore.removeAllTasks} 
-                className="font-light bg-black bg-opacity-85 py-2 px-2 text-xs text-white m-1 rounded hover:bg-black hover:bg-opacity-55">
-                &#128465; все
+                className="flex items-center justify-center font-light bg-black bg-opacity-85 py-2 px-2 text-xs text-white m-1 rounded hover:bg-black hover:bg-opacity-55"
+                onClick={treeStore.deselectAll}
+            >
+                < XMarkIcon className="w-5 h-5 text-red-500 mr-1" /> 
+                все
+            </button>
+            <button 
+                className="flex items-center justify-center font-light bg-red-500 py-2 px-2 text-xs text-white m-1 rounded hover:bg-black hover:bg-opacity-55"
+                onClick={treeStore.removeAllTasks}
+            >
+                < TrashIcon className="w-5 h-5 text-white-500 mr-1" /> 
+                все
             </button>
         </div>
     );

@@ -160,7 +160,6 @@ class TreeStore {
 
         const stringifiedData = JSON.stringify(dataToStore);
         const hash = sha3_256.update(stringifiedData).hex();
-        console.log('Хешированные данные (SHA3-256):', hash);
         localStorage.setItem('treeStore', JSON.stringify({ hash, data: stringifiedData }));
     }
     
@@ -175,7 +174,7 @@ class TreeStore {
                     this.rootTree = data.rootTree;
                     this.isDarkTheme = data.isDarkTheme;
                 } else {
-                    console.warn('Хеш данных не совпадает! Данные могут быть повреждены.');
+                    console.warn('Хеш данных не совпадает!');
                 }
             } else {
                 console.warn('Отсутствуют данные для загрузки.');
