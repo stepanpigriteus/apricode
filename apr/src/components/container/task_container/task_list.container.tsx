@@ -5,7 +5,7 @@ import { observer } from "mobx-react-lite";
 const TaskList = observer(() => {
 
     return (
-        <section className="min-w-[50%] m-0 min-h-[478px] px-4 py-4 shadow-md bg-[rgba(15,33,63,0.8)] rounded-l-lg ">
+        <section className={`min-w-[50%] m-0 min-h-[478px] px-4 py-4 shadow-md   ${treeStore.isDarkTheme ? 'bg-[rgba(15,33,63,0.8)] text-black' : 'bg-[rgba(15,33,63,0.95)] text-gray-200'} rounded-l-lg `}>
             <h3 className="text-2xl text-white font-medium mb-4 text-left">Задачи</h3>
      
             <ul>
