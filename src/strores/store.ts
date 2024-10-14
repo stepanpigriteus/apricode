@@ -1,6 +1,7 @@
 import uuid from "react-uuid";
 import { ListItem, Node } from "../types/types";
-import { action, makeAutoObservable } from "mobx";
+import {  autorun, makeAutoObservable } from "mobx";
+
 
 
 class TreeStore {
@@ -10,12 +11,21 @@ class TreeStore {
 
     constructor() {
 
-        makeAutoObservable(this);
+        makeAutoObservable(this, {}, { autoBind: true })
+        autorun(() => {
+            console.log(JSON.stringify(this.rootTree));
+          });
     }
 
 
+    selectAll = () => {
+      this.rootTree.forEach(todo => {
+        todo.item.checked = true;
+      });
+    };
 
-    addTask(parentId: string | null, title: string, description: string) {
+
+    addTask = (parentId: string | null, title: string, description: string) =>  {
         const newTask: Node<ListItem> = {
             item: {
                 id: uuid(),
@@ -32,88 +42,52 @@ class TreeStore {
         } else {
             const parent = this.findNodeById(this.rootTree, parentId);
             if (parent) {
-                parent.children.push(newTask);
+                parent.children = [...parent.children, newTask]; 
             }
         }
     }
 
-    findNodeById(nodes: Node<ListItem>[], id: string): Node<ListItem> | null {
-        for (const node of nodes) {
-            if (node.item.id === id) {
-                return node;
-            }
-            const found = this.findNodeById(node.children, id);
-            if (found) {
-                return found;
-            }
-        }
-        return null;
+  findNodeById = (nodes: Node<ListItem>[], id: string): Node<ListItem> | null => {
+    for (const node of nodes) {
+      if (node.item.id === id) {
+        return node;
+      }
+      const found = this.findNodeById(node.children, id);
+      if (found) {
+        return found;
+      }
     }
+    return null;
+  };
 
 
-    @action
     openPortal = (id: string) => {   
         this.selectedTaskId = id; 
         this.showPortal = true; 
     };
   
-    @action
+
     closePortal = () => {
         this.showPortal = false; 
         this.selectedTaskId = null;
     };
 
-    @action
+
     selectTask = (id: string) => {
         this.selectedTaskId = id;
     };
+
+    toggleTaskCheck = (id: string) => {
+        const node = this.findNodeById(this.rootTree, id);
+        if (node) {
+            node.item.checked = !node.item.checked;
+        }
+    };
+
+    
     
 }
 
-
-// const rootTree: Node<ListItem>[] = [{
-//     item: {
-//         id: uuid(), 
-//         title: "asdasfd",
-//         description: "werertqwe",
-//         expanded: false, 
-//         checked: false
-//     }, 
-//     children: [],
-//     },
-//     {
-//         item: {
-//             id: uuid(), 
-//             title: "asdasfd",
-//             description: "werertqwe",
-//             expanded: false, 
-//             checked: false
-//         }, 
-//         children: [
-//             {
-//             item: {
-//                 id: uuid(), 
-//                 title: "asdasfd",
-//                 description: "werertqwe",
-//                 expanded: false, 
-//                 checked: false
-//             }, 
-//             children: [],
-//         },
-//     ],
-//     },
-//     {
-//         item: {
-//             id: uuid(), 
-//             title: "asdasfd",
-//             description: "werertqwe",
-//             expanded: false, 
-//             checked: false
-//         }, 
-//         children: [],
-//     },
-
-// ]
 
 const treeStore = new TreeStore();
 export default treeStore;

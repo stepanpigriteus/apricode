@@ -13,6 +13,7 @@ function TaskButtons() {
         }
     };
 
+
     return (
         <div>
             <input
@@ -25,11 +26,14 @@ function TaskButtons() {
             <button
                 type="button"
                 className="font-light bg-black bg-opacity-85 py-2 px-2 text-xs text-white m-1 rounded hover:bg-black hover:bg-opacity-55"
-                onClick={handleAddTask} // Обработчик нажатия
+                onClick={handleAddTask} 
             >
                 Добавить
             </button>
-            <button className="font-light bg-black bg-opacity-85 py-2 px-2 text-xs text-white m-1 rounded hover:bg-black hover:bg-opacity-55">
+            <button 
+                className="font-light bg-black bg-opacity-85 py-2 px-2 text-xs text-white m-1 rounded hover:bg-black hover:bg-opacity-55"
+                onClick={treeStore.selectAll}
+                >
                 &#128505; все
             </button>
             <button className="font-light bg-black bg-opacity-85 py-2 px-2 text-xs text-white m-1 rounded hover:bg-black hover:bg-opacity-55">

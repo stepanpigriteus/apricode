@@ -1,22 +1,27 @@
 import { observer } from "mobx-react-lite"
 import { ListItem, Node } from "../../types/types"
 import treeStore from "../../strores/store";
-import Portal from "../modal/modal";
+
+
 
 
 function TaskItem({ children, item }: Node<ListItem>) {
     const handlePortal = (event: React.MouseEvent) => {
-        event.stopPropagation();
-        console.log(item.id);
+        event.preventDefault();
         treeStore.openPortal(item.id);
-    };
+      };
 
     return (
         
-        <li className="text-white text-sm font-extralight text-opacity-90 mt-2 leading-none">
+        <ul className="text-white text-sm font-extralight text-opacity-90 mt-2 leading-none">
             <div className="flex justify-between items-center">
                 <div className="flex items-center">
-                    <input type="checkbox" className="mr-2" />
+                <input
+                        type="checkbox"
+                        className="mr-2"
+                        checked={item.checked} 
+                        onChange={() => treeStore.toggleTaskCheck(item.id)}
+                    />
                     <span>{item.title}</span>
                 </div>
                 <div>
@@ -43,8 +48,7 @@ function TaskItem({ children, item }: Node<ListItem>) {
                     ))}
                 </ul>
             )}
-            {treeStore.showPortal && <Portal onClose={treeStore.closePortal} id={item.id} />}
-        </li>
+        </ul>
     );
 }
 

@@ -4,6 +4,7 @@ export type ListItem = {
     description?: string, 
     checked?: boolean, 
     expanded?: boolean
+    
 }
 
 export type Node<T> = {
