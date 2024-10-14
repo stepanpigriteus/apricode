@@ -1,6 +1,7 @@
 import { observer } from "mobx-react-lite"
 import { ListItem, Node } from "../../types/types"
 import treeStore from "../../strores/store";
+import {  PlusIcon, ChevronDownIcon, ChevronRightIcon, XMarkIcon } from '@heroicons/react/24/solid';
 
 const TaskItem = observer(({ item, children }: Node<ListItem>) => {
     const handlePortal = (event: React.MouseEvent) => {
@@ -39,24 +40,28 @@ const TaskItem = observer(({ item, children }: Node<ListItem>) => {
                             className="ml-2 bg-transparent p-1 text-white text-[0.7rem] min-h-1 min-w-1 border-0 focus:outline-none"
                             onClick={handleToggleExpand}
                         >
-                            {item.expanded ? '▼' : '►'}
+                             {item.expanded ? (
+                                <ChevronDownIcon className="w-4 h-4 text-white-500" />
+                            ) : (
+                                <ChevronRightIcon className="w-4 h-4 text-white-500" />
+                            )}
                         </button>
                     )}
                 </div>
-                <div>
+                <div className="flex justify-center items-center">
                     <button
                         type="button"
                         className="ml-4 bg-transparent p-1 text-white text-[1rem] min-h-1 min-w-1 border-0 focus:outline-none"
                         onClick={handlePortal}
                     >
-                        +
+                        <PlusIcon className="w-4 h-4 bg-white text-red-500 border border-white rounded-full shadow-md" />
                     </button>
                     <button
                         type="button"
-                        className="ml-2 bg-transparent p-1 text-white text-[0.7rem] min-h-1 min-w-1 border-0 focus:outline-none"
+                        className=" bg-transparent p-1 text-white text-[0.7rem] min-h-1 min-w-1 border-0 focus:outline-none "
                         onClick={handleDelete}
                     >
-                        X
+                      <XMarkIcon className="w-4 h-4 bg-red-500 text-white  mr-1 rounded-full shadow-md" /> 
                     </button>
                 </div>
             </div>
