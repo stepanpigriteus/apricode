@@ -25,7 +25,7 @@ class TreeStore {
     };
 
 
-    addTask = (parentId: string | null, title: string, description: string) =>  {
+    addTask = (parentId: string | null, title: string, description: string) => {
         const newTask: Node<ListItem> = {
             item: {
                 id: uuid(),
@@ -42,7 +42,7 @@ class TreeStore {
         } else {
             const parent = this.findNodeById(this.rootTree, parentId);
             if (parent) {
-                parent.children = [...parent.children, newTask]; 
+                parent.children.push(newTask); // Use push instead of spread operator
             }
         }
     }

@@ -5,21 +5,20 @@ import treeStore from "../../strores/store";
 
 
 
-function TaskItem({ children, item }: Node<ListItem>) {
+const TaskItem = observer(({ item, children }: Node<ListItem>) => {
     const handlePortal = (event: React.MouseEvent) => {
         event.preventDefault();
         treeStore.openPortal(item.id);
-      };
+    };
 
     return (
-        
-        <ul className="text-white text-sm font-extralight text-opacity-90 mt-2 leading-none">
+        <li className="text-white text-sm font-extralight text-opacity-90 mt-2 leading-none">
             <div className="flex justify-between items-center">
                 <div className="flex items-center">
-                <input
+                    <input
                         type="checkbox"
                         className="mr-2"
-                        checked={item.checked} 
+                        checked={item.checked}
                         onChange={() => treeStore.toggleTaskCheck(item.id)}
                     />
                     <span>{item.title}</span>
@@ -44,13 +43,12 @@ function TaskItem({ children, item }: Node<ListItem>) {
             {children.length > 0 && (
                 <ul className="ml-4 mt-2">
                     {children.map((child) => (
-                        <TaskItem key={child.item.id} {...child} />
+                        <TaskItem key={child.item.id} item={child.item} children={child.children} />
                     ))}
                 </ul>
             )}
-        </ul>
+        </li>
     );
-}
+});
 
-
-export default observer(TaskItem)
+export default TaskItem;
