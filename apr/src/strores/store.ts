@@ -81,8 +81,12 @@ class TreeStore {
             const parent = this.findNodeById(this.rootTree, parentId);
             if (parent) {
                 parent.children.push(newTask); 
+                parent.item.expanded = true;
+                
             }
         }
+        this.selectedTaskId = newTask.item.id;
+      
     }
 
     findNodeById = (nodes: Node<ListItem>[], id: string): Node<ListItem> | null => {
@@ -110,6 +114,7 @@ class TreeStore {
 
     selectTask = (id: string) => {
         this.selectedTaskId = id;
+
     };
 
     toggleTaskCheck = (id: string) => {
