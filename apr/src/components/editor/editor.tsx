@@ -1,4 +1,4 @@
-
+import { observer } from "mobx-react-lite";
 
 
 function Editor() {
@@ -9,10 +9,9 @@ function Editor() {
                         placeholder="Описание задачи"
                         className="w-full flex-1 pl-1.5 pt-3 max-w-[95%] resize-none"
                     />
-
                     <h3 className="text-center" >Выберите задачу для редактирования</h3>
             </section>
     )
 }
 
-export default Editor
+export default observer(Editor);
