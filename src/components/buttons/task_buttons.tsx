@@ -10,6 +10,8 @@ function TaskButtons() {
         if (taskTitle.trim() !== "") {
             treeStore.addTask(null, taskTitle, "");
             setTaskTitle("");
+            
+      
         }
     };
 
@@ -17,7 +19,7 @@ function TaskButtons() {
         <div className="flex">
             <input
                 type="text"
-                className="border border-gray-300 rounded py-1 px-2 m-1"
+                className="border border-gray-300 rounded py-1 px-2 m-1 min-w-[50%] "
                 value={taskTitle}
                 onChange={(e) => setTaskTitle(e.target.value)} 
                 placeholder="Введите название задачи"
