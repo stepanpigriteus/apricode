@@ -7,8 +7,6 @@ function PortalButtons({ parentId }: { parentId: string | null }) {
     const [newTaskTitle, setNewTaskTitle] = useState('');
     const [newTaskDescription, setNewTaskDescription] = useState('');
 
-    // console.log("in portalButt" +  parentId)
-
     const handleAdd = () => {
         if (newTaskTitle.trim()) {
             treeStore.addTask(parentId, newTaskTitle, newTaskDescription);
@@ -41,17 +39,19 @@ function PortalButtons({ parentId }: { parentId: string | null }) {
                         value={newTaskDescription}
                         onChange={(e) => setNewTaskDescription(e.target.value)}
                         placeholder="Описание задачи"
-                        className="w-full flex-1 border border-gray-300 rounded pl-1.5 pt-3 max-w-[95%] resize-none m-1"
+                        className="w-full flex-1 border border-gray-300 rounded pl-1.5 pt-3 max-w-[95%] min-h-[80%] resize-none m-1"
                     />
                     <div>
-                    <button
-                        type="button"
-                        onClick={handleAdd} 
-                        className="hover:bg-black hover:bg-opacity-55"
-                    >
-                        Добавить
-                    </button>
-                    <button onClick={treeStore.closePortal}>Close</button>
+                    <div>
+                        <button
+                            type="button"
+                            onClick={handleAdd} 
+                            className="hover:bg-black hover:bg-opacity-55 mr-4 bg-black text-white py-1.5 "
+                        >
+                            Добавить
+                        </button>
+                        <button className="py-1.5 shadow-lg shadow-black-500" onClick={treeStore.closePortal}>Close</button>
+                        </div>
                     </div>
                 </div>
             </div>

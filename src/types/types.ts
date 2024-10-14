@@ -1,7 +1,7 @@
 export type ListItem = {
     id: string,
-    title?: string, 
-    description?: string, 
+    title: string, 
+    description: string, 
     checked?: boolean, 
     expanded?: boolean
     
