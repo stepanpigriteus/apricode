@@ -7,15 +7,22 @@ function Editor() {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
 
-    useEffect(() => {
+  useEffect(() => {
         if (treeStore.selectedTaskId) {
             const task = treeStore.findNodeById(treeStore.rootTree, treeStore.selectedTaskId);
             if (task) {
                 setTitle(task.item.title);
                 setDescription(task.item.description);
+            } else {
+                setTitle("");
+                setDescription("");
+                treeStore.selectedTaskId = null; 
             }
+        } else {
+            setTitle("");
+            setDescription("");
         }
-    }, [treeStore.selectedTaskId]);
+    }, [treeStore.selectedTaskId, treeStore.rootTree]);
 
     const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setTitle(e.target.value);

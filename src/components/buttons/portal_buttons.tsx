@@ -2,7 +2,6 @@ import { observer } from "mobx-react-lite";
 import { useState } from "react";
 import treeStore from "../../strores/store";
 
-
 function PortalButtons({ parentId }: { parentId: string | null }) {
     const [newTaskTitle, setNewTaskTitle] = useState('');
     const [newTaskDescription, setNewTaskDescription] = useState('');
@@ -22,43 +21,63 @@ function PortalButtons({ parentId }: { parentId: string | null }) {
         }
     };
 
+    const theme = treeStore.isDarkTheme ? 'dark' : 'light';
+
+    const themeStyles = {
+        dark: {
+            background: 'bg-white',
+            text: 'text-gray-800',
+            input: 'bg-gray-100 border-gray-300',
+            button: 'bg-blue-600 hover:bg-blue-400 text-white',
+            closeButton: 'bg-gray-200 hover:bg-gray-300 text-gray-800'
+        },
+        light: {
+            background: 'bg-gray-700',
+            text: 'text-white',
+            input: 'bg-gray-600 border-gray-600 text-white',
+            button: 'bg-blue-700 hover:bg-blue-500 text-white',
+            closeButton: 'bg-gray-400 hover:bg-gray-600 text-white'
+        }
+    };
+
     return (
-        <div className="fixed inset-0 bg-gray-900 bg-opacity-80 flex justify-center items-center">
-            <div className="bg-gray-100 p-6 rounded shadow-lg w-[30%] h-[40%] max-w-[90%] max-h-[90%]">
-                <h3 className='font-semibold mb-2 text-black'>Добавьте подзадачу</h3>
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+            <div className={`${themeStyles[theme].background} ${themeStyles[theme].text} p-6 rounded-lg shadow-xl w-[30%] h-[40%] max-w-[90%] max-h-[90%]`}>
+                <h3 className='font-semibold mb-2'>Добавьте подзадачу</h3>
                 <div className="flex flex-col items-center h-[75%]">
                     <input
                         type="text"
                         value={newTaskTitle}
                         onChange={(e) => setNewTaskTitle(e.target.value)}
                         onKeyDown={handleKeyDown}
-                        className={`border border-gray-300 rounded  py-1 px-2 m-1 w-full max-w-[95%]
-                             ${treeStore.isDarkTheme ? 'bg-white text-black disabled:bg-gray-800 text-black' : 'bg-gray-100 text-black placeholder:text-gray-600'}`}
+                        className={`${themeStyles[theme].input} rounded py-1 px-2 m-1 w-full max-w-[95%]`}
                         placeholder="Название задачи"
                     />
                     <textarea
                         value={newTaskDescription}
                         onChange={(e) => setNewTaskDescription(e.target.value)}
                         placeholder="Описание задачи"
-                        className={`w-full flex-1 border border-gray-300 rounded pl-1.5 pt-3 max-w-[95%] min-h-[80%] resize-none m-1
-                             ${treeStore.isDarkTheme ? 'bg-white text-black disabled:bg-gray-800 text-black' : 'bg-gray-100 text-black placeholder:text-gray-600'}`}
+                        className={`${themeStyles[theme].input} w-full flex-1 rounded pl-1.5 pt-3 max-w-[95%] min-h-[80%] resize-none m-1`}
                     />
-                    <div>
-                    <div className="mt-2">
+                    <div className="mt-2 flex justify-end w-full">
                         <button
                             type="button"
                             onClick={handleAdd} 
-                            className={`hover:bg-black hover:bg-opacity-55 mr-4 bg-black text-white py-1.5 ${treeStore.isDarkTheme ? 'bg-black text-black disabled:bg-gray-800 text-black' : 'bg-gray-600 '}`}
+                            className={`${themeStyles[theme].button} py-1.5 px-4 rounded mr-2`}
                         >
                             Добавить
                         </button>
-                        <button className="py-1.5 text-black shadow-lg shadow-black-500" onClick={treeStore.closePortal}>Close</button>
-                        </div>
+                        <button 
+                            className={`${themeStyles[theme].closeButton} py-1.5 px-4 rounded`} 
+                            onClick={treeStore.closePortal}
+                        >
+                            Закрыть
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
-    
     );
 }
+
 export default observer(PortalButtons);
