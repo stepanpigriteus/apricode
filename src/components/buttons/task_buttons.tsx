@@ -19,7 +19,6 @@ function TaskButtons() {
         }
     };
 
-
     return (
         <div className="flex mb-2">
             <input
@@ -35,7 +34,6 @@ function TaskButtons() {
                 type="button"
                 className="font-light bg-green-700 bg-opacity-85 py-2 px-2 text-xs text-white m-1 rounded hover:bg-black hover:bg-opacity-55 "
                 onClick={handleAddTask} 
-                
             >
                 Добавить
             </button>
