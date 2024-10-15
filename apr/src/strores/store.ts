@@ -63,7 +63,7 @@ class TreeStore {
         });
     };
 
-    addTask = (parentId: string | null, title: string, description: string) => {
+    addTask = (parentId: string | null, title: string, description: string):string => {
         const newTask: Node<ListItem> = {
             item: {
                 id: uuid(),
@@ -86,7 +86,7 @@ class TreeStore {
             }
         }
         this.selectedTaskId = newTask.item.id;
-      
+        return this.selectedTaskId
     }
 
     findNodeById = (nodes: Node<ListItem>[], id: string): Node<ListItem> | null => {
@@ -121,8 +121,80 @@ class TreeStore {
         const node = this.findNodeById(this.rootTree, id);
         if (node) {
             node.item.checked = !node.item.checked;
+            if (node.children.length > 0) {
+                this.setDescendantsChecked(node, node.item.checked);
+            }
+            this.updateAncestorsChecked(this.rootTree, id);
         }
     };
+
+    setDescendantsChecked = (node: Node<ListItem>, checked: boolean) => {
+        node.children.forEach(child => {
+            child.item.checked = checked;
+            this.setDescendantsChecked(child, checked);
+        });
+    };
+
+    updateAncestorsChecked = (nodes: Node<ListItem>[], childId: string): boolean => {
+        for (const node of nodes) {
+            if (node.item.id === childId) {
+                return true;
+            }
+            if (this.updateAncestorsChecked(node.children, childId)) {
+                node.item.checked = this.areAllDescendantsChecked(node);
+                return true;
+            }
+        }
+        return false;
+    };
+
+    
+    areAllDescendantsChecked = (node: Node<ListItem>): boolean => {
+        return node.children.every(child => 
+            child.item.checked && this.areAllDescendantsChecked(child)
+        );
+    };
+
+    setChildrenChecked = (node: Node<ListItem>, checked: boolean) => {
+        node.children.forEach(child => {
+            child.item.checked = checked;
+            this.setChildrenChecked(child, checked);
+        });
+    };
+
+    updateImmediateParentChecked = (nodes: Node<ListItem>[], childId: string): boolean => {
+        for (const node of nodes) {
+            if (node.children.some(child => child.item.id === childId)) {
+                node.item.checked = node.children.every(child => child.item.checked);
+                return true;
+            }
+            if (this.updateImmediateParentChecked(node.children, childId)) {
+                return true; 
+            }
+        }
+        return false;
+    };
+
+    updateParentChecked = (nodes: Node<ListItem>[], childId: string): boolean => {
+        for (const node of nodes) {
+            if (node.children.some(child => child.item.id === childId)) {
+                const allChildrenChecked = node.children.every(child => child.item.checked);
+                node.item.checked = allChildrenChecked;
+                this.updateParentChecked(this.rootTree, node.item.id);
+                return allChildrenChecked;
+            }
+            if (this.updateParentChecked(node.children, childId)) {
+                return true;
+            }
+        }
+        return false;
+    };
+
+    setNodeChecked = (node: Node<ListItem>, checked: boolean) => {
+        node.item.checked = checked;
+        node.children.forEach(child => this.setNodeChecked(child, checked));
+    };
+
 
     toggleExpanded = (id: string) => {
         const node = this.findNodeById(this.rootTree, id);
