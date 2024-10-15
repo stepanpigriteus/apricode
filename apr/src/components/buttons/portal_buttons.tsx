@@ -32,21 +32,23 @@ function PortalButtons({ parentId }: { parentId: string | null }) {
                         value={newTaskTitle}
                         onChange={(e) => setNewTaskTitle(e.target.value)}
                         onKeyDown={handleKeyDown}
-                        className="border border-gray-300 rounded  py-1 px-2 m-1 w-full max-w-[95%]"
+                        className={`border border-gray-300 rounded  py-1 px-2 m-1 w-full max-w-[95%]
+                             ${treeStore.isDarkTheme ? 'bg-white text-black disabled:bg-gray-800 text-black' : 'bg-gray-100 text-black placeholder:text-gray-600'}`}
                         placeholder="Название задачи"
                     />
                     <textarea
                         value={newTaskDescription}
                         onChange={(e) => setNewTaskDescription(e.target.value)}
                         placeholder="Описание задачи"
-                        className="w-full flex-1 border border-gray-300 rounded pl-1.5 pt-3 max-w-[95%] min-h-[80%] resize-none m-1"
+                        className={`w-full flex-1 border border-gray-300 rounded pl-1.5 pt-3 max-w-[95%] min-h-[80%] resize-none m-1
+                             ${treeStore.isDarkTheme ? 'bg-white text-black disabled:bg-gray-800 text-black' : 'bg-gray-100 text-black placeholder:text-gray-600'}`}
                     />
                     <div>
                     <div className="mt-2">
                         <button
                             type="button"
                             onClick={handleAdd} 
-                            className="hover:bg-black hover:bg-opacity-55 mr-4 bg-black text-white py-1.5 "
+                            className={`hover:bg-black hover:bg-opacity-55 mr-4 bg-black text-white py-1.5 ${treeStore.isDarkTheme ? 'bg-black text-black disabled:bg-gray-800 text-black' : 'bg-gray-600 '}`}
                         >
                             Добавить
                         </button>
