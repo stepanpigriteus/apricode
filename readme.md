@@ -1,5 +1,12 @@
-Экстренный Todo 
+### Экстренный Todo 
 
+## Стек: 
+- React
+- TS
+- MobX
+- Tailwind
+
+**Деплой**: https://apricodetodo.vercel.app/
 
 ## Функции
 
